@@ -16,7 +16,9 @@ class DuckDuckGo(Toolkit):
         search: bool = True,
         news: bool = True,
         fixed_max_results: Optional[int] = None,
-        headers: Optional[Any] = None,
+        headers: Optional[Any] =  {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:124.0) Gecko/20100101 Firefox/124.0"
+    },
         proxy: Optional[str] = None,
         proxies: Optional[Any] = None,
         timeout: Optional[int] = 10,
@@ -43,6 +45,7 @@ class DuckDuckGo(Toolkit):
         Returns:
             The result from DuckDuckGo.
         """
+
         logger.debug(f"Searching DDG for: {query}")
         ddgs = DDGS(headers=self.headers, proxy=self.proxy, proxies=self.proxies, timeout=self.timeout)
         return json.dumps(ddgs.text(keywords=query, max_results=(self.fixed_max_results or max_results)), indent=2)
@@ -60,3 +63,4 @@ class DuckDuckGo(Toolkit):
         logger.debug(f"Searching DDG news for: {query}")
         ddgs = DDGS(headers=self.headers, proxy=self.proxy, proxies=self.proxies, timeout=self.timeout)
         return json.dumps(ddgs.news(keywords=query, max_results=(self.fixed_max_results or max_results)), indent=2)
+
